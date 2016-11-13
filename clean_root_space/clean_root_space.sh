@@ -4,7 +4,7 @@
 this_dir=$(cd $(dirname $0);pwd)
 cd $this_dir || exit
 
-#
+##
 LOG_PATH="$this_dir/log"
 DATA_PATH="$this_dir/data"
 
