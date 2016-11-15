@@ -42,7 +42,7 @@ function isTopTime(){
 
 # 判断squid是否启动，启动返回0，未启动返回1
 function isSquidOn(){
-    /bin/netstat -ntlp | grep 800 >/dev/null
+    /bin/netstat -ntlp | awk '$4 ~ /:800$/' |grep 800 >/dev/null
     if [[ $? -eq 0 ]];then
         return 0
     else
@@ -56,7 +56,7 @@ function getSsdUsage(){
     local ssd_ratio
     df -h | grep -P "$ssd_dir$" >/dev/null 2>&1
     if [[ $? -eq 0 ]];then
-        ssd_ratio=$(df -h | grep -P "$ssd_dir$" | awk '{print $5}' | cut -d% -f1)
+        ssd_ratio=$(df -h | grep -P "$ssd_dir$" | awk '{print $(NF-1)}' | cut -d% -f1)
 	log "ssd_dir: $ssd_dir, ssd_ratio: $ssd_ratio"
         echo $ssd_ratio
         return 0
